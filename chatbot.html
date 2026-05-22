@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduBot | Chat Assistant</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3f0ff, #b3d8ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .chat-container {
+      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(51, 153, 255, 0.2);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2196f3;
+      margin-bottom: 16px;
+    }
+
+    .chat-box {
+      flex: 1;
+      border: 1px solid #b3d8ff;
+      border-radius: 8px;
+      padding: 12px;
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      background: #f9f9f9;
+    }
+
+    .chat-message {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 80%;
+    }
+
+    .user {
+      background-color: #2196f3;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background-color: #e3f2fd;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #b3d8ff;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px 16px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>EduBot</h2>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Ask a question..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      appendMessage(message, 'user');
+      respondToUser(message.toLowerCase());
+      userInput.value = '';
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add('chat-message', sender);
+      msg.textContent = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function respondToUser(input) {
+      let response = "I'm not sure about that. Try asking something else.";
+
+      if (input.includes('what is photosynthesis')) {
+        response = "Photosynthesis is the process by which green plants use sunlight to make their own food from carbon dioxide and water.";
+      } else if (input.includes('tips for studying')) {
+        response = "Break your study time into chunks, use flashcards, teach others, and take regular breaks!";
+      } else if (input.includes('who discovered gravity')) {
+        response = "Sir Isaac Newton is credited with discovering gravity.";
+      } else if (input.includes('motivate me')) {
+        response = "You're doing great! Keep pushing forward—every step counts!";
+      } else if (input.includes('what is pi')) {
+        response = "Pi is a mathematical constant approximately equal to 3.14159. It's the ratio of a circle's circumference to its diameter.";
+      } else if (input.includes('how to improve in math')) {
+        response = "Practice regularly, understand the concepts, solve different types of problems, and don’t hesitate to ask for help.";
+      }
+
+      appendMessage(response, 'bot');
+    }
+  </script>
+</body>
+</html>

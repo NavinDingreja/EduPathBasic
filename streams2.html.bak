@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Your Stream</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: #2196f3;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 40px 0 24px 0;
+            min-height: 100vh;
+            box-shadow: 2px 0 16px rgba(51,153,255,0.10);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+        .sidebar h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin: 0 0 32px 32px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-align: left;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-btn, .login-btn {
+            width: calc(100% - 64px);
+            margin: 8px 32px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(8px);
+        }
+        .login-btn {
+            background: #1565c0;
+            color: #fff;
+            margin-top: auto;
+        }
+        .login-btn:hover {
+            background: #1976d2;
+        }
+        .menu-toggle {
+            position: fixed;
+            left: 16px;
+            top: 16px;
+            background: #2196f3;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            flex: 1;
+            margin-left: 260px;
+            width: calc(100vw - 260px);
+            height: 100vh;
+            max-width: calc(100vw - 260px);
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.35);
+            transition: margin-left 0.3s ease;
+        }
+        .container.full {
+            margin-left: 0;
+            width: 100vw;
+            max-width: 100vw;
+            box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 0;
+            padding: 0;
+        }
+        .streams-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .stream-card {
+            background: #e3f0ff;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            padding: 32px 24px;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stream-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 8px 32px rgba(51,153,255,0.18);
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: #2196f3;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(51,153,255,0.12);
+        }
+        @media (max-width: 900px) {
+            .container {
+                padding: 24px 8px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .stream-card {
+                min-width: 90vw;
+                max-width: 98vw;
+                padding: 18px 4px;
+            }
+        }
+    </style>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars" id="menuIcon"></i></button>
+    <div class="sidebar closed" id="sidebar">
+        <div style="width:100%; position:relative;">
+            <button class="close-toggle" id="closeToggle" aria-label="Close menu" style="display:none; position:absolute; top:18px; right:18px; background:#1565c0; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.3rem; cursor:pointer; z-index:102;"><i class="fas fa-times"></i></button>
+            <h2>EduPath</h2>
+            <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+            <button class="nav-btn" onclick="location.href='streams.html'">Streams</button>
+            <button class="nav-btn" onclick="location.href='quiz.html'">Quiz</button>
+            <button class="nav-btn" onclick="alert('Great People feature coming soon!')">Great People</button>
+            <button class="nav-btn" onclick="alert('Chatbot feature coming soon!')">Chatbot</button>
+            <button class="nav-btn" onclick="location.href='about.html'">About</button>
+            <button class="login-btn" onclick="alert('Login feature coming soon!')">Login</button>
+        </div>
+        <div style="width:100%; text-align:center; font-size:0.95rem; color:#e3f0ff; margin-top:24px; opacity:0.8;">
+            &copy; 2025 EduPath. All rights reserved.
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
+        <h1>Choose Your Stream</h1>
+        <div class="streams-grid">
+            <div class="stream-card" onclick="location.href='science.html'">
+                <span class="emoji">🔬</span>
+                <h2>Science</h2>
+            </div>
+            <div class="stream-card" onclick="location.href='commerce.html'">
+                <span class="emoji">💰</span>
+                <h2>Commerce</h2>
+            </div>
+            <div class="stream-card" onclick="location.href='arts.html'">
+                <span class="emoji">🎨</span>
+                <h2>Arts</h2>
+            </div>
+            <div class="stream-card" onclick="location.href='diploma.html'">
+                <span class="emoji">🎓</span>
+                <h2>Diploma</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const closeToggle = document.getElementById('closeToggle');
+
+        function openSidebar() {
+            sidebar.classList.remove('closed');
+            mainContent.classList.remove('full');
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+        function closeSidebar() {
+            sidebar.classList.add('closed');
+            mainContent.classList.add('full');
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        }
+
+        menuToggle.addEventListener('click', openSidebar);
+        closeToggle.addEventListener('click', closeSidebar);
+
+        // On load, ensure correct button visibility
+        if (sidebar.classList.contains('closed')) {
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        } else {
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

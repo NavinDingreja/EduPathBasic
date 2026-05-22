@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About EduPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .about-container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+            padding: 40px 32px;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.3rem;
+            color: #2196f3;
+            margin-bottom: 18px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(51,153,255,0.12);
+        }
+        .aim {
+            font-size: 1.15rem;
+            color: #1565c0;
+            margin-bottom: 32px;
+            background: #e3f0ff;
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+        }
+        .team-list {
+            margin-top: 32px;
+            text-align: left;
+            background: #f7fbff;
+            border-radius: 12px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.08);
+            display: inline-block;
+        }
+        .team-list h2 {
+            color: #2196f3;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        .team-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .team-list li {
+            font-size: 1.08rem;
+            color: #1565c0;
+            margin-bottom: 10px;
+            padding-left: 0;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .team-list li i {
+            color: #2196f3;
+            margin-right: 10px;
+            transition: color 0.2s;
+        }
+        .team-list li:hover {
+            background: #e3f0ff;
+        }
+        .team-list li:hover i {
+            color: #1565c0;
+        }
+        .team-list li .badge {
+            background: #2196f3;
+            color: #fff;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            padding: 2px 8px;
+            margin-left: 10px;
+        }
+        .nav-btn {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .nav-btn:hover {
+            background-color: #1976d2;
+        }
+        @media (max-width: 700px) {
+            .about-container {
+                padding: 18px 6px;
+            }
+        }
+    </style>
+    <script>
+        function showProfile(name) {
+            alert('Meet ' + name + '! Passionate IIMS student and EduPath contributor.');
+        }
+    </script>
+</head>
+<body>
+    <div class="about-container">
+        <h1>About EduPath</h1>
+        <div class="aim">
+            <strong>Aim:</strong> EduPath is dedicated to guiding students in India towards the right stream and career, making informed choices after 10th and 12th. Our mission is to empower every learner with clear, unbiased information and interactive tools for a brighter future.
+        </div>
+        <div class="team-list">
+            <h2>Our Team</h2>
+            <ul>
+                <li onclick="showProfile('Navin Dingreja')"><i class="fas fa-user-graduate"></i> Navin Dingreja (07) <span class="badge">IIMS Student</span></li>
+                <li onclick="showProfile('Bhavesha Girap')"><i class="fas fa-user-graduate"></i> Bhavesha Girap <span class="badge">IIMS Student</span></li>
+                <li onclick="showProfile('Prashant Patil')"><i class="fas fa-user-graduate"></i> Prashant Patil <span class="badge">IIMS Student</span></li>
+            </ul>
+        </div>
+        
+        <div style="margin-top:32px; color:#2196f3; font-size:0.95rem; opacity:0.7;">
+            &copy; 2025 EduPath. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

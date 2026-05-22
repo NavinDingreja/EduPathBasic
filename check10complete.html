@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10th Completion Check</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: #2196f3;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 40px 0 24px 0;
+            min-height: 100vh;
+            box-shadow: 2px 0 16px rgba(51,153,255,0.10);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+        .menu-toggle {
+            position: fixed;
+            left: 16px;
+            top: 16px;
+            background: #2196f3;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.35);
+            box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+            backdrop-filter: blur(8px);
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.full {
+            margin-left: 0;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            padding: 16px 32px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover {
+            background: #1565c0;
+        }
+        .login-btn {
+            background: #fff;
+            color: #2196f3;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            margin: 32px 32px 0 32px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            transition: background 0.2s, color 0.2s;
+        }
+        .login-btn:hover {
+            background: #1565c0;
+            color: #fff;
+        }
+        .check-card {
+            position: relative;
+            background: rgba(255,255,255,0.35);
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(31,38,135,0.18);
+            padding: 40px 32px;
+            max-width: 400px;
+            margin: 80px auto;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.18);
+            backdrop-filter: blur(4px);
+            overflow: hidden;
+        }
+        .check-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('images/10th.jpg') center/cover no-repeat;
+            opacity: 0.18;
+            z-index: 0;
+        }
+        .check-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .check-btn {
+            margin: 18px 12px 0 12px;
+            padding: 10px 28px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: none;
+            background: #2d89ef;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: background 0.2s;
+        }
+        .check-btn:hover {
+            background: #1b5fa7;
+        }
+        .study-msg {
+            margin-top: 22px;
+            color: #c0392b;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 80vw;
+                min-width: 220px;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .check-card {
+                margin: 40px auto;
+                padding: 30px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars" id="menuIcon"></i></button>
+    <div class="sidebar closed" id="sidebar">
+        <div style="width:100%; position:relative;">
+            <button class="close-toggle" id="closeToggle" aria-label="Close menu" style="display:none; position:absolute; top:18px; right:18px; background:#1565c0; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.3rem; cursor:pointer; z-index:102;"><i class="fas fa-times"></i></button>
+            <h2>EduPath</h2>
+            <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+            <button class="nav-btn" onclick="location.href='streams.html'">Streams</button>
+            <button class="nav-btn" onclick="location.href='quiz.html'">Quiz</button>
+            <button class="nav-btn" onclick="alert('Great People feature coming soon!')">Great People</button>
+            <button class="nav-btn" onclick="alert('Chatbot feature coming soon!')">Chatbot</button>
+            <button class="nav-btn" onclick="location.href='about.html'">About</button>
+            <button class="login-btn" onclick="alert('Login feature coming soon!')">Login</button>
+        </div>
+        <div style="width:100%; text-align:center; font-size:0.95rem; color:#e3f0ff; margin-top:24px; opacity:0.8;">
+            &copy; 2025 EduPath. All rights reserved.
+        </div>
+    </div>
+    <div class="main-content full" id="mainContent">
+        <div class="check-card">
+            <h2>Have you completed 10th?</h2>
+            <button class="check-btn" onclick="handleYes()">Yes</button>
+            <button class="check-btn" onclick="handleNo()">No</button>
+            <div id="studyMsg" class="study-msg" style="display:none;">
+                First complete your studies!
+            </div>
+        </div>
+    </div>
+    <script>
+        // Sidebar toggle logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const closeToggle = document.getElementById('closeToggle');
+
+        function openSidebar() {
+            sidebar.classList.remove('closed');
+            mainContent.classList.remove('full');
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+        function closeSidebar() {
+            sidebar.classList.add('closed');
+            mainContent.classList.add('full');
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        }
+
+        menuToggle.addEventListener('click', openSidebar);
+        closeToggle.addEventListener('click', closeSidebar);
+
+        // On load, ensure correct button visibility
+        if (sidebar.classList.contains('closed')) {
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        } else {
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+
+        // Check completion handlers
+        function handleYes() {
+            window.open('streams.html', '_blank');
+        }
+        function handleNo() {
+            document.getElementById('studyMsg').style.display='block';
+        }
+    </script>
+</body>
+</html>

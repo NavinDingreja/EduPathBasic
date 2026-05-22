@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduPath Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                min-height: 100vh;
+                background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+                font-family: 'Roboto', sans-serif;
+            }
+            .sidebar {
+                width: 260px;
+                background: #2196f3;
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 40px 0 24px 0;
+                min-height: 100vh;
+                box-shadow: 2px 0 16px rgba(51,153,255,0.10);
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 100;
+                transform: translateX(0);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.closed {
+                transform: translateX(-100%);
+            }
+            .sidebar h2 {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 2rem;
+                margin: 0 0 32px 32px;
+                letter-spacing: 2px;
+                color: #fff;
+                text-align: left;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .nav-btn, .login-btn {
+                width: calc(100% - 64px);
+                margin: 8px 32px;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: all 0.2s;
+                text-align: left;
+                display: flex;
+                align-items: center;
+                font-family: 'Roboto', sans-serif;
+            }
+            .nav-btn {
+                background: rgba(255,255,255,0.1);
+                color: #fff;
+            }
+            .nav-btn:hover {
+                background: rgba(255,255,255,0.2);
+                transform: translateX(8px);
+            }
+            .login-btn {
+                background: #1565c0;
+                color: #fff;
+                margin-top: auto;
+            }
+            .login-btn:hover {
+                background: #1976d2;
+            }
+            .menu-toggle {
+                position: fixed;
+                left: 16px;
+                top: 16px;
+                background: #2196f3;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 44px;
+                height: 44px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 101;
+                box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .main-content {
+                overflow-y: auto;
+                flex: 1;
+                margin-left: 260px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: rgba(255,255,255,0.35);
+                box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+                backdrop-filter: blur(8px);
+                min-height: 100vh;
+                transition: margin-left 0.3s ease;
+                padding-top: 32px;
+                padding-bottom: 32px;
+            }
+            .main-content.full {
+                margin-left: 0;
+            }
+            .quiz-card {
+                background: #e3f0ff;
+                border-radius: 18px;
+                box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+                margin-bottom: 24px;
+                padding: 32px 24px;
+                min-width: 340px;
+                max-width: 480px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                transition: box-shadow 0.3s, transform 0.3s;
+                animation: fadeIn 0.5s;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .progress-bar {
+                width: 100%;
+                height: 8px;
+                background: #b3d8ff;
+                border-radius: 8px;
+                margin-bottom: 18px;
+                overflow: hidden;
+            }
+            .progress {
+                height: 100%;
+                background: linear-gradient(90deg, #2196f3 0%, #1565c0 100%);
+                border-radius: 8px;
+                transition: width 0.3s;
+            }
+            .feedback {
+                font-size: 1.1rem;
+                color: #1976d2;
+                margin-top: 12px;
+                min-height: 24px;
+                font-weight: 500;
+                animation: fadeIn 0.4s;
+            }
+            .restart-btn {
+                background: #fff;
+                color: #2196f3;
+                border: 2px solid #2196f3;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.1rem;
+                padding: 12px 28px;
+                border-radius: 10px;
+                margin: 18px 8px 0 8px;
+                cursor: pointer;
+                transition: background 0.2s, color 0.2s;
+            }
+            .restart-btn:hover {
+                background: #2196f3;
+                color: #fff;
+            }
+            h1 {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 2.5rem;
+                color: #2196f3;
+                margin-bottom: 24px;
+                letter-spacing: 2px;
+                text-shadow: 0 2px 8px rgba(51,153,255,0.12);
+            }
+            .quiz-btn {
+                background: #2196f3;
+                color: #fff;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.1rem;
+                padding: 14px 32px;
+                border: none;
+                border-radius: 10px;
+                margin: 12px 8px;
+                cursor: pointer;
+                transition: background 0.2s, transform 0.2s;
+                box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            }
+            .quiz-btn:hover {
+                background: #1565c0;
+                transform: translateY(-2px) scale(1.04);
+            }
+            .result {
+                font-size: 1.3rem;
+                color: #1565c0;
+                margin-top: 24px;
+                font-weight: 600;
+            }
+            @media (max-width: 600px) {
+                .quiz-card {
+                    min-width: 90vw;
+                    max-width: 98vw;
+                    padding: 18px 4px;
+                }
+                h1 {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars" id="menuIcon"></i></button>
+                <div class="sidebar closed" id="sidebar">
+                    <div style="width:100%; position:relative;">
+                        <button class="close-toggle" id="closeToggle" aria-label="Close menu" style="display:none; position:absolute; top:18px; right:18px; background:#1565c0; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.3rem; cursor:pointer; z-index:102;"><i class="fas fa-times"></i></button>
+                        <h2>EduPath</h2>
+                        <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+                        <button class="nav-btn" onclick="location.href='streams.html'">Streams</button>
+                        <button class="nav-btn" onclick="location.href='quiz.html'">Quiz</button>
+                        <button class="nav-btn" onclick="location.href='great-people.html'">Great People</button>
+                        <button class="nav-btn" onclick="alert('Chatbot feature coming soon!')">Chatbot</button>
+                        <button class="nav-btn" onclick="location.href='about.html'">About</button>
+                        <button class="login-btn" onclick="alert('Login feature coming soon!')">Login</button>
+                    </div>
+                    <div style="width:100%; text-align:center; font-size:0.95rem; color:#e3f0ff; margin-top:24px; opacity:0.8;">
+                        &copy; 2025 EduPath. All rights reserved.
+                    </div>
+                </div>
+
+                <div class="main-content full" id="mainContent">
+                    <h1>EduPath Quiz</h1>
+                    <div id="quiz-card" class="quiz-card"></div>
+                </div>
+    <noscript>
+        <div style="color: red; font-weight: bold; margin-top: 24px;">JavaScript is required for the quiz to work.</div>
+    </noscript>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var questions = [
+            { question: "Which subject do you enjoy the most?", options: ["Mathematics", "Biology", "Business Studies", "History"], streams: ["Science", "Science", "Commerce", "Arts"] },
+            { question: "What type of career appeals to you?", options: ["Engineer/Doctor", "Accountant/Manager", "Artist/Journalist", "Technician"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which activity do you prefer?", options: ["Lab experiments", "Solving case studies", "Writing stories", "Hands-on work"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which skill do you want to develop most?", options: ["Analytical thinking", "Practical skills", "Creativity", "Business acumen"], streams: ["Science", "Diploma", "Arts", "Commerce"] },
+            { question: "Which environment do you prefer?", options: ["Lab/Clinic", "Office/Corporate", "Studio/Field", "Workshop"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which subject do you find most challenging?", options: ["Maths", "Theory subjects", "Practical subjects", "None"], streams: ["Science", "Arts", "Diploma", "Commerce"] },
+            { question: "Which hobby do you enjoy most?", options: ["Reading science magazines", "Stock market games", "Painting/Drawing", "DIY projects"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which club would you join?", options: ["Robotics", "Entrepreneurship", "Drama", "Automobile"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which award would excite you?", options: ["Best Innovator", "Best Business Plan", "Best Creative Work", "Best Technical Skill"], streams: ["Science", "Commerce", "Arts", "Diploma"] },
+            { question: "Which future do you imagine?", options: ["Researcher", "CEO", "Filmmaker", "Engineer"], streams: ["Science", "Commerce", "Arts", "Diploma"] }
+        ];
+        var current = 0;
+        var scores = {Science:0, Commerce:0, Arts:0, Diploma:0};
+        var quizCard = document.getElementById('quiz-card');
+        var feedbackTimeout = null;
+
+        function renderQuestion() {
+            var q = questions[current];
+            var progress = Math.round((current / questions.length) * 100);
+            var html = '<div class="progress-bar"><div class="progress" style="width:' + progress + '%"></div></div>';
+            html += '<h2>' + q.question + '</h2>';
+            for (var idx = 0; idx < q.options.length; idx++) {
+                html += '<button class="quiz-btn" data-index="' + idx + '">' + q.options[idx] + '</button>';
+            }
+            html += '<div class="feedback" id="feedback"></div>';
+            quizCard.innerHTML = html;
+
+            document.querySelectorAll('.quiz-btn').forEach(function(button) {
+                button.onclick = function() {
+                    var i = parseInt(button.getAttribute('data-index'));
+                    scores[q.streams[i]]++;
+                    showFeedback(q.options[i], q.streams[i]);
+                };
+            });
+        }
+
+        function showFeedback(option, stream) {
+            var feedback = document.getElementById('feedback');
+            feedback.innerHTML = 'You chose <b>' + option + '</b> &rarr; <span style="color:#2196f3">' + stream + ' stream</span>';
+            if (feedbackTimeout) clearTimeout(feedbackTimeout);
+            feedbackTimeout = setTimeout(function() {
+                current++;
+                if (current < questions.length) {
+                    renderQuestion();
+                } else {
+                    showResult();
+                }
+            }, 900);
+        }
+
+        function showResult() {
+            var max = 0;
+            var chosen = "";
+            for (var stream in scores) {
+                if (scores[stream] > max) {
+                    max = scores[stream];
+                    chosen = stream;
+                }
+            }
+            var html = '<div class="result">We suggest you consider the <b>' + chosen + '</b> stream!</div>';
+            html += '<div style="margin-top:18px; font-size:1.1rem; color:#1976d2;">Your scores:<br>';
+            for (var stream in scores) {
+                html += stream + ': <b>' + scores[stream] + '</b> &nbsp; ';
+            }
+            html += '</div>';
+            html += '<button class="restart-btn" id="restartBtn">Restart Quiz</button>';
+            quizCard.innerHTML = html;
+            document.getElementById('restartBtn').onclick = restartQuiz;
+        }
+
+        function restartQuiz() {
+            current = 0;
+            scores = {Science:0, Commerce:0, Arts:0, Diploma:0};
+            renderQuestion();
+        }
+
+        renderQuestion();
+    });
+    </script>
+    
+    <script>
+        // Sidebar toggle logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const closeToggle = document.getElementById('closeToggle');
+
+        function openSidebar() {
+            sidebar.classList.remove('closed');
+            sidebar.style.display = 'flex';
+            mainContent.classList.remove('full');
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+        function closeSidebar() {
+            sidebar.classList.add('closed');
+            sidebar.style.display = 'none';
+            mainContent.classList.add('full');
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        }
+
+        menuToggle.addEventListener('click', openSidebar);
+        closeToggle.addEventListener('click', closeSidebar);
+
+        // On load, ensure correct button visibility
+        if (sidebar.classList.contains('closed')) {
+            sidebar.style.display = 'none';
+            menuToggle.style.display = 'flex';
+            closeToggle.style.display = 'none';
+        } else {
+            sidebar.style.display = 'flex';
+            menuToggle.style.display = 'none';
+            closeToggle.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

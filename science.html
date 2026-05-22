@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Science Courses</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; }
+        body { min-height: 100vh; background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%); font-family: 'Roboto', sans-serif; display: flex; }
+        .sidebar { width: 260px; background: #2196f3; color: #fff; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 40px 0 24px 0; min-height: 100vh; box-shadow: 2px 0 16px rgba(51,153,255,0.10); position: fixed; left: 0; top: 0; z-index: 100; transform: translateX(0); transition: transform 0.3s ease; }
+        .sidebar.closed { transform: translateX(-100%); }
+        .sidebar h2 { font-family: 'Montserrat', sans-serif; font-size: 2rem; margin: 0 0 32px 32px; letter-spacing: 2px; color: #fff; text-align: left; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .menu-toggle { position: fixed; left: 16px; top: 16px; background: #2196f3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 1.5rem; cursor: pointer; z-index: 101; box-shadow: 0 2px 8px rgba(51,153,255,0.10); display: flex; align-items: center; justify-content: center; }
+        .main-content { flex: 1; margin-left: 260px; display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.35); box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18); backdrop-filter: blur(8px); min-height: 100vh; transition: margin-left 0.3s ease; padding: 40px 20px; }
+        .main-content.full { margin-left: 0; }
+        h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; color: #2196f3; margin-bottom: 24px; letter-spacing: 2px; text-shadow: 0 2px 8px rgba(51,153,255,0.12); text-align: center; }
+        .container { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin-top: 32px; max-width: 1100px; width: 100%; margin-left: auto; margin-right: auto; margin-bottom: 0; }
+        .card { background: #e3f0ff; border-radius: 18px; box-shadow: 0 2px 8px rgba(51,153,255,0.10); padding: 32px 24px; min-width: 220px; max-width: 320px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: 2px solid transparent; }
+        .card:hover { transform: translateY(-8px) scale(1.04); box-shadow: 0 8px 32px rgba(51,153,255,0.18); border-color: #1565c0; }
+        .emoji { font-size: 2rem; margin-bottom: 10px; }
+        .title { font-weight: 600; color: #2196f3; font-size: 1.1rem; margin-bottom: 10px; }
+        .info { display: none; font-size: 0.95rem; background: #e3f0ff; color: #1565c0; border-left: 4px solid #2196f3; border-radius: 10px; padding: 12px; margin-top: 10px; text-align: left; }
+        h2 { text-align: center; color: #2196f3; margin-top: 60px; font-family: 'Montserrat', sans-serif; font-size: 2rem; text-shadow: 0 2px 8px rgba(51,153,255,0.1); }
+        table { width: 90%; max-width: 1000px; margin: 20px auto; border-collapse: collapse; background: rgba(227,240,255,0.7); border-radius: 16px; box-shadow: 0 4px 16px rgba(51,153,255,0.1); overflow: hidden; }
+        th, td { padding: 14px; text-align: center; border-bottom: 1px solid #ddd; color: #1565c0; }
+        th { background: #2196f3; color: #fff; font-weight: 600; }
+        tr:hover { background: rgba(33,150,243,0.12); }
+        footer { text-align: center; margin-top: 40px; font-size: 0.9rem; color: #e3f0ff; opacity: 0.8; background: none; pointer-events: none; position: fixed; right: 18px; bottom: 10px; z-index: 9999; line-height: 1.2; white-space: nowrap; }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            padding: 16px 32px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover {
+            background: #1565c0;
+        }
+        .login-btn {
+            background: #fff;
+            color: #2196f3;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            margin: 32px 32px 0 32px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            transition: background 0.2s, color 0.2s;
+        }
+        .login-btn:hover {
+            background: #1565c0;
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 80vw;
+                min-width: 220px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 12px 4px;
+            }
+            .sidebar h2 {
+                font-size: 1.2rem;
+                margin: 0 12px 0 12px;
+            }
+            .nav-btn, .login-btn {
+                font-size: 1rem;
+                padding: 8px 12px;
+                margin: 0 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars" id="menuIcon"></i></button>
+    <div class="sidebar closed" id="sidebar">
+        <div style="width:100%; position:relative;">
+            <button class="close-toggle" id="closeToggle" aria-label="Close menu" style="display:none; position:absolute; top:18px; right:18px; background:#1565c0; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.3rem; cursor:pointer; z-index:102;"><i class="fas fa-times"></i></button>
+            <h2>EduPath</h2>
+            <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+            <button class="nav-btn" onclick="location.href='streams.html'">Streams</button>
+            <button class="nav-btn" onclick="location.href='quiz.html'">Quiz</button>
+            <button class="nav-btn" onclick="location.href='about.html'">About</button>
+            <button class="nav-btn" onclick="location.href='great-people.html'">Great People</button>
+            <button class="login-btn" onclick="alert('Login feature coming soon!')">Login</button>
+        </div>
+        <div style="width:100%; text-align:center; font-size:0.95rem; color:#e3f0ff; margin-top:24px; opacity:0.8;">&copy; 2025 EduPath. All rights reserved.</div>
+    </div>
+    <div class="main-content full" id="mainContent">
+        <h1>Science Courses</h1>
+        <div class="container">
+  <div class="card" onclick="toggleInfo(1)">
+    <div class="emoji">⚙️</div>
+    <div class="title">Bachelor of Engineering (B.E.) / Bachelor of Technology (B.Tech)</div>
+    <div class="info" id="info1">
+      <b>About:</b> 4-year degree in various branches like Computer, Mechanical, Civil, Electrical, etc.<br>
+      <b>Career Options:</b> Software Engineer, Mechanical Engineer, Civil Engineer, Data Scientist.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(2)">
+    <div class="emoji">🩺</div>
+    <div class="title">Bachelor of Medicine and Bachelor of Surgery (MBBS)</div>
+    <div class="info" id="info2">
+      <b>About:</b> 5.5-year professional course to become a doctor.<br>
+      <b>Career Options:</b> Doctor, Surgeon, Medical Officer, Researcher.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(3)">
+    <div class="emoji">💊</div>
+    <div class="title">Bachelor of Pharmacy (B.Pharm)</div>
+    <div class="info" id="info3">
+      <b>About:</b> 4-year degree focusing on drug formulation, chemistry, and pharmacology.<br>
+      <b>Career Options:</b> Pharmacist, Drug Inspector, Medical Representative, Research Associate.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(4)">
+    <div class="emoji">🔬</div>
+    <div class="title">Bachelor of Science in Biotechnology (B.Sc Biotechnology)</div>
+    <div class="info" id="info4">
+      <b>About:</b> Studies genetics, cell biology, and bioprocesses used in healthcare and agriculture.<br>
+      <b>Career Options:</b> Biotechnologist, Lab Technician, Research Scientist, Quality Analyst.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(5)">
+    <div class="emoji">💻</div>
+    <div class="title">Bachelor of Computer Applications (BCA)</div>
+    <div class="info" id="info5">
+      <b>About:</b> 3-year course in computer programming, software, and IT systems.<br>
+      <b>Career Options:</b> Software Developer, Web Developer, Data Analyst, System Administrator.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(6)">
+    <div class="emoji">✈️</div>
+    <div class="title">Bachelor of Science in Aviation</div>
+    <div class="info" id="info6">
+      <b>About:</b> Covers principles of flight, air traffic control, and airport operations.<br>
+      <b>Career Options:</b> Pilot, Air Traffic Controller, Aviation Manager, Flight Dispatcher.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(7)">
+    <div class="emoji">🧪</div>
+    <div class="title">Bachelor of Science in Chemistry / Physics / Mathematics</div>
+    <div class="info" id="info7">
+      <b>About:</b> Pure science courses focusing on theoretical and practical aspects.<br>
+      <b>Career Options:</b> Scientist, Research Assistant, Lecturer, Lab Technician.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(8)">
+    <div class="emoji">🧫</div>
+    <div class="title">Bachelor of Science in Microbiology</div>
+    <div class="info" id="info8">
+      <b>About:</b> Studies microorganisms and their impact on humans and the environment.<br>
+      <b>Career Options:</b> Microbiologist, Pathologist, Food Safety Officer, Research Assistant.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(9)">
+    <div class="emoji">🧠</div>
+    <div class="title">Bachelor of Psychology (B.Sc Psychology)</div>
+    <div class="info" id="info9">
+      <b>About:</b> Studies human behavior, mental health, and cognitive processes.<br>
+      <b>Career Options:</b> Psychologist, Counselor, HR Specialist, Clinical Researcher.
+    </div>
+  </div>
+  <div class="card" onclick="toggleInfo(10)">
+    <div class="emoji">🌌</div>
+    <div class="title">Bachelor of Science in Environmental Science</div>
+    <div class="info" id="info10">
+      <b>About:</b> Focuses on ecology, pollution control, and sustainability.<br>
+      <b>Career Options:</b> Environmental Consultant, Wildlife Conservationist, Research Officer.
+    </div>
+  </div>
+</div>
+<h2>Entrance Exams</h2>
+<table>
+  <tr>
+    <th>Course</th>
+    <th>Entrance Exam</th>
+    <th>Level</th>
+    <th>Conducted By</th>
+  </tr>
+  <tr><td>B.Tech / B.E.</td><td>JEE Main, JEE Advanced, MHT-CET</td><td>National / State</td><td>NTA / DTE Maharashtra</td></tr>
+  <tr><td>MBBS</td><td>NEET-UG</td><td>National</td><td>NTA</td></tr>
+  <tr><td>B.Pharm</td><td>MHT-CET / GPAT</td><td>State / National</td><td>DTE Maharashtra / NTA</td></tr>
+  <tr><td>B.Sc (Biotechnology, Microbiology, etc.)</td><td>CUET / State CET</td><td>National / State</td><td>NTA / State Universities</td></tr>
+  <tr><td>BCA</td><td>CUET / SET / State Exams</td><td>National / State</td><td>NTA / Private Universities</td></tr>
+  <tr><td>B.Sc Aviation</td><td>AMET Entrance / IGRUA / University Test</td><td>National / University</td><td>AMET / IGRUA</td></tr>
+  <tr><td>B.Sc Chemistry / Physics / Math</td><td>CUET</td><td>National</td><td>NTA</td></tr>
+  <tr><td>B.Sc Environmental Science</td><td>CUET / University Test</td><td>National / University</td><td>NTA / Institutes</td></tr>
+  <tr><td>B.Sc Psychology</td><td>CUET / University Test</td><td>National / University</td><td>NTA / Institutes</td></tr>
+</table>
+<footer>© 2025 Science Courses Roadmap | Designed for Indian Students</footer>
+<script>
+function toggleInfo(id) {
+  const allInfo = document.querySelectorAll(".info");
+  allInfo.forEach((info) => {
+    if (info.id !== "info" + id) info.style.display = "none";
+  });
+  const selected = document.getElementById("info" + id);
+  selected.style.display = selected.style.display === "block" ? "none" : "block";
+}
+// Sidebar toggle logic
+const menuToggle = document.getElementById('menuToggle');
+const menuIcon = document.getElementById('menuIcon');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('mainContent');
+const closeToggle = document.getElementById('closeToggle');
+function openSidebar() {
+    sidebar.classList.remove('closed');
+    mainContent.classList.remove('full');
+    menuToggle.style.display = 'none';
+    closeToggle.style.display = 'block';
+}
+function closeSidebar() {
+    sidebar.classList.add('closed');
+    mainContent.classList.add('full');
+    menuToggle.style.display = 'flex';
+    closeToggle.style.display = 'none';
+}
+menuToggle.addEventListener('click', openSidebar);
+closeToggle.addEventListener('click', closeSidebar);
+if (sidebar.classList.contains('closed')) {
+    menuToggle.style.display = 'flex';
+    closeToggle.style.display = 'none';
+} else {
+    menuToggle.style.display = 'none';
+    closeToggle.style.display = 'block';
+}
+</script>
+</body>
+</html>

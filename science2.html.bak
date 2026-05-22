@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Science Stream Courses Roadmap</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+    }
+    .sidebar {
+      width: 260px;
+      background: #2196f3;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 40px 0 24px 0;
+      min-height: 100vh;
+      box-shadow: 2px 0 16px rgba(51,153,255,0.10);
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+    .sidebar.closed {
+      transform: translateX(-100%);
+    }
+    .sidebar h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin: 0 0 32px 32px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-align: left;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .nav-btn, .login-btn {
+      width: calc(100% - 64px);
+      margin: 8px 32px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(8px);
+    }
+    .login-btn {
+      background: #1565c0;
+      color: #fff;
+      margin-top: auto;
+    }
+    .login-btn:hover {
+      background: #1976d2;
+    }
+    .menu-toggle {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      background: #2196f3;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 101;
+      box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.35);
+      box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+      backdrop-filter: blur(8px);
+      padding: 40px 0;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.3rem;
+      color: #2196f3;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(51,153,255,0.12);
+    }
+    .streams-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 10px;
+      max-width: 1100px;
+    }
+    .stream-card {
+      background: #e3f0ff;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+      padding: 24px 20px;
+      width: 260px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .stream-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 8px 32px rgba(51,153,255,0.18);
+    }
+    .emoji {
+      font-size: 30px;
+    }
+    .stream-card h2 {
+      font-size: 1.1rem;
+      color: #1565c0;
+      margin-top: 10px;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      padding-top: 120px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      font-family: 'Roboto', sans-serif;
+    }
+    .modal h2 {
+      color: #1565c0;
+      margin-top: 0;
+    }
+    .close {
+      color: #999;
+      float: right;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+    @media (max-width: 900px) {
+      .container { padding: 12px; }
+      h1 { font-size: 1.6rem; }
+      .stream-card { width: 90vw; }
+    }
+    .copyright-footer {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #1565c0;
+      opacity: 0.7;
+      margin: 20px 0;
+    }
+    /* Entrance Table */
+    section {
+      margin: 40px auto;
+      max-width: 900px;
+      background: #ffffffb8;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    section h2 {
+      text-align: center;
+      color: #1565c0;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Poppins', sans-serif;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #1565c0;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars" id="menuIcon"></i></button>
+  <div class="sidebar closed" id="sidebar">
+    <div style="width:100%; position:relative;">
+      <button class="close-toggle" id="closeToggle" aria-label="Close menu" style="display:none; position:absolute; top:18px; right:18px; background:#1565c0; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.3rem; cursor:pointer; z-index:102;"><i class="fas fa-times"></i></button>
+      <h2>EduPath</h2>
+      <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+      <button class="nav-btn" onclick="location.href='streams.html'">Streams</button>
+      <button class="nav-btn" onclick="location.href='quiz.html'">Quiz</button>
+      <button class="nav-btn" onclick="alert('Great People feature coming soon!')">Great People</button>
+      <button class="nav-btn" onclick="alert('Chatbot feature coming soon!')">Chatbot</button>
+      <button class="nav-btn" onclick="alert('About EduPath: Empowering your journey!')">About</button>
+      <button class="login-btn" onclick="alert('Login feature coming soon!')">Login</button>
+    </div>
+    <div style="width:100%; text-align:center; font-size:0.95rem; color:#e3f0ff; margin-top:24px; opacity:0.8;">
+      &copy; 2025 EduPath. All rights reserved.
+    </div>
+  </div>
+  <div class="container" id="mainContent">
+    <h1>Science Stream Courses</h1>
+    <div class="streams-grid" id="courseGrid"></div>
+  </div>
+
+  <!-- Entrance Exam Table -->
+  <section>
+    <h2>Entrance Exams</h2>
+    <table>
+      <tr>
+        <th>Course</th>
+        <th>Entrance Exam</th>
+        <th>Level</th>
+        <th>Conducted By</th>
+      </tr>
+      <tr><td>B.Tech / B.E.</td><td>JEE Main, JEE Advanced, MHT-CET</td><td>National / State</td><td>NTA / DTE Maharashtra</td></tr>
+      <tr><td>MBBS</td><td>NEET-UG</td><td>National</td><td>NTA</td></tr>
+      <tr><td>B.Pharm</td><td>MHT-CET / GPAT</td><td>State / National</td><td>DTE Maharashtra / NTA</td></tr>
+      <tr><td>B.Sc (Biotechnology, Microbiology, etc.)</td><td>CUET / State CET</td><td>National / State</td><td>NTA / State Universities</td></tr>
+      <tr><td>BCA</td><td>CUET / SET / State Exams</td><td>National / State</td><td>NTA / Private Universities</td></tr>
+      <tr><td>B.Sc Aviation</td><td>AMET Entrance / IGRUA / University Test</td><td>National / University</td><td>AMET / IGRUA</td></tr>
+      <tr><td>B.Sc Chemistry / Physics / Math</td><td>CUET</td><td>National</td><td>NTA</td></tr>
+      <tr><td>B.Sc Environmental Science</td><td>CUET / University Test</td><td>National / University</td><td>NTA / Institutes</td></tr>
+      <tr><td>B.Sc Psychology</td><td>CUET / University Test</td><td>National / University</td><td>NTA / Institutes</td></tr>
+    </table>
+  </section>
+
+  <div class="copyright-footer">&copy; 2025 EduPath. All rights reserved.</div>
+
+  <!-- Modal -->
+  <div id="courseModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeBtn">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalAbout"></p>
+      <p id="modalCareer"></p>
+    </div>
+  </div>
+
+  <script>
+    const courses = [
+      {emoji:"⚙️", title:"Bachelor of Engineering (B.E.) / Bachelor of Technology (B.Tech)",
+        about:"4-year degree in various branches like Computer, Mechanical, Civil, Electrical, etc.",
+        career:"Software Engineer, Mechanical Engineer, Civil Engineer, Data Scientist."},
+      {emoji:"🩺", title:"Bachelor of Medicine and Bachelor of Surgery (MBBS)",
+        about:"5.5-year professional course to become a doctor.",
+        career:"Doctor, Surgeon, Medical Officer, Researcher."},
+      {emoji:"💊", title:"Bachelor of Pharmacy (B.Pharm)",
+        about:"4-year degree focusing on drug formulation, chemistry, and pharmacology.",
+        career:"Pharmacist, Drug Inspector, Medical Representative, Research Associate."},
+      {emoji:"🔬", title:"Bachelor of Science in Biotechnology (B.Sc Biotechnology)",
+        about:"Studies genetics, cell biology, and bioprocesses used in healthcare and agriculture.",
+        career:"Biotechnologist, Lab Technician, Research Scientist, Quality Analyst."},
+      {emoji:"💻", title:"Bachelor of Computer Applications (BCA)",
+        about:"3-year course in computer programming, software, and IT systems.",
+        career:"Software Developer, Web Developer, Data Analyst, System Administrator."},
+      {emoji:"✈️", title:"Bachelor of Science in Aviation",
+        about:"Covers principles of flight, air traffic control, and airport operations.",
+        career:"Pilot, Air Traffic Controller, Aviation Manager, Flight Dispatcher."},
+      {emoji:"🧪", title:"Bachelor of Science in Chemistry / Physics / Mathematics",
+        about:"Pure science courses focusing on theoretical and practical aspects.",
+        career:"Scientist, Research Assistant, Lecturer, Lab Technician."},
+      {emoji:"🧫", title:"Bachelor of Science in Microbiology",
+        about:"Studies microorganisms and their impact on humans and the environment.",
+        career:"Microbiologist, Pathologist, Food Safety Officer, Research Assistant."},
+      {emoji:"🧠", title:"Bachelor of Psychology (B.Sc Psychology)",
+        about:"Studies human behavior, mental health, and cognitive processes.",
+        career:"Psychologist, Counselor, HR Specialist, Clinical Researcher."},
+      {emoji:"🌌", title:"Bachelor of Science in Environmental Science",
+        about:"Focuses on ecology, pollution control, and sustainability.",
+        career:"Environmental Consultant, Wildlife Conservationist, Research Officer."}
+    ];
+
+    const grid = document.getElementById("courseGrid");
+    const modal = document.getElementById("courseModal");
+    const closeBtn = document.getElementById("closeBtn");
+
+    courses.forEach((c, i) => {
+      const card = document.createElement("div");
+      card.className = "stream-card";
+      card.innerHTML = `<div class="emoji">${c.emoji}</div><h2>${c.title}</h2>`;
+      card.onclick = () => showModal(i);
+      grid.appendChild(card);
+    });
+
+    function showModal(i) {
+      const c = courses[i];
+      document.getElementById("modalTitle").innerText = c.title;
+      document.getElementById("modalAbout").innerText = "About: " + c.about;
+      document.getElementById("modalCareer").innerText = "Career Options: " + c.career;
+      modal.style.display = "block";
+    }
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
+  </script>
+
+</body>
+</html>

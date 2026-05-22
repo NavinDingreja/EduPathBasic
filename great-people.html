@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Great People | EduPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .putin-card {
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            border: 3px solid #1565c0;
+            box-shadow: 0 8px 32px 0 rgba(33,150,243,0.18);
+            min-width: 400px;
+            min-height: 520px;
+            padding: 48px 32px 32px 32px;
+            position: relative;
+            z-index: 2;
+        }
+        .putin-card .person-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #1565c0;
+            box-shadow: 0 6px 24px rgba(33,150,243,0.18);
+            margin-bottom: 18px;
+        }
+        .putin-card .person-name {
+            font-size: 1.7rem;
+            color: #0d47a1;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .putin-card .person-stream {
+            font-size: 1.15rem;
+            color: #1976d2;
+            margin-bottom: 16px;
+        }
+        .putin-card .company-name {
+            color: #1565c0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .putin-card .person-desc {
+            font-size: 1.09rem;
+            color: #263238;
+            margin-bottom: 18px;
+        }
+        .putin-card .profile-links a {
+            font-size: 1.5rem;
+            margin: 0 12px;
+        }
+        .wiki-card, .putin-card {
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            border: 3px solid #1565c0;
+            box-shadow: 0 8px 32px 0 rgba(33,150,243,0.18);
+            min-width: 400px;
+            min-height: 520px;
+            padding: 48px 32px 32px 32px;
+            position: relative;
+            z-index: 2;
+        }
+        .wiki-card .person-photo, .putin-card .person-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #1565c0;
+            box-shadow: 0 6px 24px rgba(33,150,243,0.18);
+            margin-bottom: 18px;
+        }
+        .wiki-card .person-name, .putin-card .person-name {
+            font-size: 1.7rem;
+            color: #0d47a1;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .wiki-card .person-stream, .putin-card .person-stream {
+            font-size: 1.15rem;
+            color: #1976d2;
+            margin-bottom: 16px;
+        }
+        .wiki-card .company-name, .putin-card .company-name {
+            color: #1565c0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .wiki-card .person-desc, .putin-card .person-desc {
+            font-size: 1.09rem;
+            color: #263238;
+            margin-bottom: 18px;
+        }
+        .wiki-card .profile-links a, .putin-card .profile-links a {
+            font-size: 1.5rem;
+            margin: 0 12px;
+        }
+        .wiki-card .person-photo {
+            border: 4px solid #b3d8ff;
+            box-shadow: 0 4px 16px rgba(51,153,255,0.12);
+        }
+        .wiki-card .person-name {
+            font-size: 1.25rem;
+            color: #0d47a1;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .wiki-card .person-stream {
+            font-size: 1.05rem;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .wiki-card .company-name {
+            color: #1565c0;
+            font-weight: 600;
+        }
+        .wiki-card .person-desc {
+            font-size: 1.01rem;
+            color: #263238;
+            margin-bottom: 10px;
+        }
+        .wiki-card .profile-links a {
+            font-size: 1.3rem;
+            margin: 0 8px;
+        }
+        body {
+            background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .people-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.92);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px 0 rgba(51,153,255,0.18);
+            padding: 48px 32px 32px 32px;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.3rem;
+            color: #2196f3;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .quote {
+            font-size: 1.18rem;
+            color: #1565c0;
+            text-align: center;
+            margin-bottom: 32px;
+            font-style: italic;
+            background: linear-gradient(90deg, #e3f0ff 60%, #b3d8ff 100%);
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+        }
+        .people-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 56px 56px;
+            justify-content: center;
+            margin-top: 56px;
+        }
+        .person-card {
+            background: linear-gradient(135deg, #f7fbff 60%, #e3f0ff 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(51,153,255,0.10);
+            padding: 28px 20px;
+            width: 260px;
+            text-align: center;
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .person-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 12px 36px rgba(51,153,255,0.22);
+            border-color: #1565c0;
+        }
+        .person-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.10);
+            border: 3px solid #2196f3;
+            transition: border-color 0.2s;
+        }
+        .person-card:hover .person-photo {
+            border-color: #1565c0;
+        }
+        .person-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2196f3;
+            margin-bottom: 6px;
+        }
+        .person-stream {
+            font-size: 1rem;
+            color: #1565c0;
+            margin-bottom: 8px;
+        }
+        .company {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .company-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(51,153,255,0.08);
+            transition: transform 0.2s;
+        }
+        .person-card:hover .company-logo {
+            transform: scale(1.15) rotate(-8deg);
+        }
+        .company-name {
+            font-size: 0.98rem;
+            color: #333;
+            font-weight: 500;
+        }
+        .person-desc {
+            font-size: 0.97rem;
+            color: #455a64;
+            margin-bottom: 8px;
+        }
+        .profile-links {
+            margin-top: 10px;
+        }
+        .profile-links a {
+            color: #2196f3;
+            margin: 0 6px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .profile-links a:hover {
+            color: #1565c0;
+        }
+        @media (max-width: 900px) {
+            .people-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+            .people-container {
+                padding: 18px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="people-container">
+        <h1>Great People</h1>
+        <div class="quote">"Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful."</div>
+        <div class="people-grid">
+            <!-- Vladimir Putin -->
+            <div class="person-card putin-card">
+                <img class="person-photo" src="images/putin.jpg" alt="Vladimir Putin">
+                <div class="person-name">Vladimir Putin</div>
+                <div class="person-stream">Law, Political Science</div>
+                <div class="company">
+                    <img class="company-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg" alt="Russia">
+                    <span class="company-name">Russian Federation</span>
+                </div>
+                <div class="person-desc">President of Russia. Influential world leader, former intelligence officer, and a key figure in global politics. Known for his leadership, strategic thinking, and impact on international affairs.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Vladimir_Putin" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/KremlinRussia_E" target="_blank" title="Official Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <!-- Elon Musk -->
+            <div class="person-card wiki-card">
+                <img class="person-photo" src="images/elonmusk.png" alt="Elon Musk">
+                <div class="person-name">Elon Musk</div>
+                <div class="person-stream">Physics, Economics</div>
+                <div class="company">
+                    <img class="company-logo" src="images/spacex-svgrepo-com.svg" alt="SpaceX">
+                    <span class="company-name">SpaceX</span>
+                </div>
+                <div class="company">
+                    <img class="company-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg" alt="Tesla">
+                    <span class="company-name">Tesla Motors</span>
+                </div>
+                <div class="person-desc">CEO and founder of SpaceX, CEO of Tesla Motors. Visionary entrepreneur in technology and space.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Elon_Musk" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/elonmusk" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.tesla.com/elon-musk" target="_blank" title="Tesla Profile"><i class="fas fa-car"></i></a>
+                </div>
+            </div>
+            <!-- Jeff Bezos -->
+            <div class="person-card wiki-card">
+                <img class="person-photo" src="images/jeff.jpg" alt="Jeff Bezos">
+                <div class="person-name">Jeff Bezos</div>
+                <div class="person-stream">Computer Science, Electrical Engineering</div>
+                <div class="company">
+                    <img class="company-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+                    <span class="company-name">Amazon</span>
+                </div>
+                <div class="company">
+                    <img class="company-logo" src="images/Blue Origin.svg" alt="Blue Origin">
+                    <span class="company-name">Blue Origin</span>
+                </div>
+                <div class="person-desc">Founder of Amazon and Blue Origin. Pioneer in e-commerce and private space travel.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Jeff_Bezos" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/JeffBezos" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <!-- Ratan Tata -->
+            <div class="person-card wiki-card">
+                <img class="person-photo" src="images/ratan.jpg" alt="Ratan Tata">
+                <div class="person-name">Ratan Tata</div>
+                <div class="person-stream">Architecture, Management</div>
+                <div class="company">
+                    <img class="company-logo" src="images/tata.png" alt="Tata Group">
+                    <span class="company-name">Tata Group</span>
+                </div>
+                <div class="person-desc">Former chairman of Tata Group. Renowned Indian industrialist and philanthropist.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Ratan_Tata" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/RNTata2000" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <!-- Sundar Pichai -->
+            <div class="person-card wiki-card">
+                <img class="person-photo" src="images/undar.jpg" alt="Sundar Pichai">
+                <div class="person-name">Sundar Pichai</div>
+                <div class="person-stream">Metallurgical Engineering, Management</div>
+                <div class="company">
+                    <img class="company-logo" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+                    <span class="company-name">Google</span>
+                </div>
+                <div class="person-desc">CEO of Google and Alphabet. Leading innovator in technology and AI.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Sundar_Pichai" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/sundarpichai" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <!-- Satya Nadella -->
+            <div class="person-card wiki-card">
+                <img class="person-photo" src="images/satya.jpg" alt="Satya Nadella">
+                <div class="person-name">Satya Nadella</div>
+                <div class="person-stream">Electronics & Communication, Management</div>
+                <div class="company">
+                    <img class="company-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                    <span class="company-name">Microsoft</span>
+                </div>
+                <div class="person-desc">CEO of Microsoft. Champion of cloud computing and digital transformation.</div>
+                <div class="profile-links">
+                    <a href="https://en.wikipedia.org/wiki/Satya_Nadella" target="_blank" title="Wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                    <a href="https://twitter.com/satyanadella" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:32px; color:#2196f3; font-size:0.95rem; opacity:0.7; text-align:center;">
+            &copy; 2025 EduPath. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
